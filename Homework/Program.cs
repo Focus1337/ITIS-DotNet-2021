@@ -4,11 +4,14 @@ namespace Homework
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            var val1 = int.Parse(args[0]);
+            if (args.Length < 3)
+                Console.WriteLine($"The program requires 3 " + $"CLI arguments but {args.Length} provided");
+
+            var isVal1 = int.TryParse(args[0], out var val1);
             var operation = args[1];
-            var val2 = int.Parse(args[2]);
+            var isVal2 = int.TryParse(args[2], out var val2);
 
             var result = 0;
             switch (operation)
@@ -19,10 +22,21 @@ namespace Homework
                 case "/": result = val1 / val2; break;
             };
 
+            if (!isVal1)
+            {
+                Console.WriteLine($"Val1 is not int: {args[2]}");
+                return 1;
+            }
 
+            if (!isVal2)
+            {
+                Console.WriteLine($"Val1 is not int: {args[0]}");
+                return 1;
+            }
 
             Console.WriteLine($"Result = {result}");
-
+            
+            return 0;
         }
     }
 }
