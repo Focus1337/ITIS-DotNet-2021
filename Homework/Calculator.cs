@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Homework
+﻿namespace Calculator
 {
     public static class Calculator
     {
@@ -10,11 +6,11 @@ namespace Homework
         {
             Plus,
             Minus,
-            Multiply,
-            Divide
+            Divide,
+            Multiply
         }
 
-        public static int Calculate(int val1, int val2, Operation operation)
+        public static int Calculate(int val1, Operation operation, int val2)
         {
             return operation switch
             {
@@ -22,7 +18,7 @@ namespace Homework
                 Operation.Minus => val1 - val2,
                 Operation.Multiply => val1 * val2,
                 Operation.Divide => val1 / val2,
-                _ => throw new NotImplementedException()
+                _ => throw new System.NotImplementedException()
             };
         }
     }
