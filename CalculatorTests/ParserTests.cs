@@ -44,4 +44,5 @@ namespace CalculatorTests
             Assert.Equal(Parser.CheckArgsLengthOrQuit(args), result);
         }
     }
+    
 }
