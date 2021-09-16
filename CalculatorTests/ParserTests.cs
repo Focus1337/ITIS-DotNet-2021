@@ -1,7 +1,6 @@
-﻿using Xunit;
-using static Calculator.Parser;
-using static Calculator.Calculator;
-using static Calculator.Program;
+﻿using System;
+using Calculator;
+using Xunit;
 
 namespace CalculatorTests
 {
@@ -17,7 +16,7 @@ namespace CalculatorTests
         [InlineData("++", true)]
         public void TryParseOperatorOrQuit_ReturnFalseOrTrue(string arg, bool result)
         {
-            Assert.Equal(TryParseOperatorOrQuit(arg, out Operation operation), result);
+            Assert.Equal(Parser.TryParseOperatorOrQuit(arg, out Calculator.Calculator.Operation operation), result);
         }
 
         [Theory]
@@ -30,7 +29,7 @@ namespace CalculatorTests
         [InlineData("++", true)]
         public void TryParseArgOrQuit_ReturnFalseOrTrue(string arg, bool result)
         {
-            Assert.Equal(TryParseArgsOrQuit(arg, out int methodResult), result);
+            Assert.Equal(Parser.TryParseArgsOrQuit(arg, out int methodResult), result);
         }
 
         [Theory]
@@ -42,26 +41,80 @@ namespace CalculatorTests
         [InlineData(new[] { "" }, true)]
         public void CheckArgsLengthOrQuit_ReturnFalseOrTrue(string[] args, bool result)
         {
-            Assert.Equal(CheckArgsLengthOrQuit(args), result);
+            Assert.Equal(Parser.CheckArgsLengthOrQuit(args), result);
         }
         
-        [Theory]
+         [Theory]
          [InlineData(new[] { "1", "+", "2" }, 0)]
          [InlineData(new[] { "3", "-", "4" }, 0)]
          [InlineData(new[] { "5", "*", "6" }, 0)]
          [InlineData(new[] { "77", "/" }, 1)]
          [InlineData(new[] { "3ergerg" }, 1)]
          [InlineData(new[] { "8", "+", "9", "z" }, 1)]
+         public void Main_TryParseArgsAndOperator_ReturnNotEnoughArgsException(string[] args, int result)
+         {
+             try
+             {
+                 Program.Main(args);
+             }
+             catch (Exception e)
+             {
+                 Assert.Equal(Program.NotEnoughArgs, e);
+             }
+         }
+         
+         [Theory]
+         [InlineData(new[] { "5", "+", "2" }, 0)]
+         [InlineData(new[] { "9", "-", "4" }, 0)]
+         [InlineData(new[] { "15", "*", "6" }, 0)]
          [InlineData(new[] { "10", "11", "" }, 2)]
          [InlineData(new[] { "hz", "/", "dd" }, 2)]
          [InlineData(new[] { "r", "*", "23" }, 2)]
+         public void Main_TryParseArgsAndOperator_ReturnWrongArgFormatException(string[] args, int result)
+         {
+             try
+             {
+                 Program.Main(args);
+             }
+             catch (Exception e)
+             {
+                 Assert.Equal(Program.WrongArgFormat, e);
+             }
+         }
+         [Theory]
+         [InlineData(new[] { "1", "+", "2" }, 0)]
+         [InlineData(new[] { "3", "-", "4" }, 0)]
+         [InlineData(new[] { "5", "*", "6" }, 0)]
          [InlineData(new[] { "1", "j", "8" }, 3)]
          [InlineData(new[] { "9", "", "3" }, 3)]
          [InlineData(new[] { "5", "34", "9" }, 3)]
-        [InlineData(new[] { "5", "/", "0" }, 4)]
-         public void Main_TryParseArgsAndOperator_ReturnErrorCode(string[] args, int result)
+         public void Main_TryParseArgsAndOperator_ReturnWrongOperationException(string[] args, int result)
          {
-             Assert.Equal(Main(args), result);
+             try
+             {
+                 Program.Main(args);
+             }
+             catch (Exception e)
+             {
+                 Assert.Equal(Program.WrongOperation, e);
+             }
+         }
+         
+         [Theory]
+         [InlineData(new[] { "1", "+", "2" }, 0)]
+         [InlineData(new[] { "3", "-", "4" }, 0)]
+         [InlineData(new[] { "5", "*", "6" }, 0)]
+         [InlineData(new[] { "5", "/", "0" }, 4)]
+         public void Main_TryParseArgsAndOperator_ReturnAttemptToDivideByZeroException(string[] args, int result)
+         {
+             try
+             {
+                 Program.Main(args);
+             }
+             catch (Exception e)
+             {
+                 Assert.Equal(Program.AttemptToDivideByZero, e);
+             }
          }
     }
 }

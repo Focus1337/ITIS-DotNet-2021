@@ -4,24 +4,24 @@ namespace Calculator
 {
     public class Program
     {
-        private const int NotEnoughArgs = 1;
-        private const int WrongArgFormat = 2;
-        private const int WrongOperation = 3;
-        private const int AttemptToDivideByZero = 4;
+        public static Exception NotEnoughArgs = new Exception("Not enough args");
+        public static Exception WrongArgFormat = new Exception("Wrong arg format");
+        public static Exception WrongOperation = new Exception("Wrong operation");
+        public static Exception AttemptToDivideByZero = new Exception("Attempt to divide by zero");
         
         public static int Main(string[] args)
         {
             if (Parser.CheckArgsLengthOrQuit(args))
-                return NotEnoughArgs;
-
+                throw NotEnoughArgs;
+            
             if (Parser.TryParseArgsOrQuit(args[0], out var val1) || Parser.TryParseArgsOrQuit(args[2], out var val2))
-                return WrongArgFormat;
+                throw WrongArgFormat;
 
             if (Parser.TryParseOperatorOrQuit(args[1], out var operation))
-                return WrongOperation;
+                throw WrongOperation;
 
             if (Calculator.Calculate(val1, operation, val2, out var result))
-                return AttemptToDivideByZero;
+                throw AttemptToDivideByZero;
 
             Console.WriteLine($"Result : {result}");
 
