@@ -59,7 +59,7 @@ namespace CalculatorTests
              }
              catch (Exception e)
              {
-                 Assert.Equal(Program.NotEnoughArgs, e);
+                 Assert.Equal(ParserExceptions.NotEnoughArgs, e);
              }
          }
          
@@ -78,7 +78,7 @@ namespace CalculatorTests
              }
              catch (Exception e)
              {
-                 Assert.Equal(Program.WrongArgFormat, e);
+                 Assert.Equal(ParserExceptions.WrongArgFormat, e);
              }
          }
          [Theory]
@@ -96,7 +96,7 @@ namespace CalculatorTests
              }
              catch (Exception e)
              {
-                 Assert.Equal(Program.WrongOperation, e);
+                 Assert.Equal(ParserExceptions.WrongOperation, e);
              }
          }
          
@@ -113,7 +113,7 @@ namespace CalculatorTests
              }
              catch (Exception e)
              {
-                 Assert.Equal(Program.AttemptToDivideByZero, e);
+                 Assert.Equal(ParserExceptions.AttemptToDivideByZero, e);
              }
          }
     }
