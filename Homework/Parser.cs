@@ -1,14 +1,6 @@
 ﻿using System;
 namespace Calculator
 {
-    public static class ParserExceptions
-    {
-        public static readonly Exception NotEnoughArgs = new Exception("Not enough args");
-        public static readonly Exception WrongArgFormat = new Exception("Wrong arg format");
-        public static readonly Exception WrongOperation = new Exception("Wrong operation");
-        public static readonly Exception AttemptToDivideByZero = new Exception("Attempt to divide by zero");
-    }
-    
     public static class Parser
     {
         public static bool TryParseOperatorOrQuit(string arg, out Calculator.Operation operation)
