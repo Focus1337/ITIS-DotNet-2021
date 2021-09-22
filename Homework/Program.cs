@@ -1,4 +1,5 @@
 ﻿using System;
+using ILLibrary;
 
 namespace Calculator
 {
@@ -11,16 +12,28 @@ namespace Calculator
         
         public static int Main(string[] args)
         {
-            if (Parser.CheckArgsLengthOrQuit(args))
+            // if (Parser.CheckArgsLengthOrQuit(args))
+            //     return NotEnoughArgs;
+            //
+            // if (Parser.TryParseArgsOrQuit(args[0], out var val1) || Parser.TryParseArgsOrQuit(args[2], out var val2))
+            //     return WrongArgFormat;
+            //
+            // if (Parser.TryParseOperatorOrQuit(args[1], out var operation))
+            //     return WrongOperation;
+
+           // if (Calculator.Calculate(val1, operation, val2, out var result))
+            //    return AttemptToDivideByZero;
+            
+            if (ILLibrary.ILParser.CheckArgsLengthOrQuit(args))
                 return NotEnoughArgs;
-
-            if (Parser.TryParseArgsOrQuit(args[0], out var val1) || Parser.TryParseArgsOrQuit(args[2], out var val2))
+            
+            if (ILLibrary.ILParser.TryParseArgsOrQuit(args[0], out var val1) || ILLibrary.ILParser.TryParseArgsOrQuit(args[2], out var val2))
                 return WrongArgFormat;
-
-            if (Parser.TryParseOperatorOrQuit(args[1], out var operation))
+            
+            if (ILLibrary.ILParser.TryParseOperatorOrQuit(args[1], out var operation))
                 return WrongOperation;
-
-            if (Calculator.Calculate(val1, operation, val2, out var result))
+            
+            if (ILLibrary.ILCalculator.Calculate(val1, (ILLibrary.ILCalculator.Operation)operation, val2, out var result))
                 return AttemptToDivideByZero;
 
             Console.WriteLine($"Result : {result}");
