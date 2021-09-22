@@ -53,7 +53,7 @@
     RESULT_PLUS: ldarg.3
     ldarg.0      // val1
     ldarg.2      // val2
-    add
+    add         // суммируем
     stind.i4
 
     // plus case break
@@ -63,7 +63,7 @@
     RESULT_SUB: ldarg.3
     ldarg.0      // val1
     ldarg.2      // val2
-    sub
+    sub          // вычитаем
     stind.i4
 
     // minus case break
@@ -73,7 +73,7 @@
     RESULT_MULT: ldarg.3
     ldarg.0      // val1
     ldarg.2      // val2
-    mul
+    mul          // умножаем
     stind.i4
 
     // multiply case break
@@ -82,7 +82,7 @@
     // check if val2 == 0
     DIV_ARGUMENT: ldarg.2      // val2
     ldc.i4.0
-    ceq
+    ceq           // проверяем равенство
     stloc.2      // V_2
     ldloc.2      // V_2
     brfalse.s    RESULT_DIV
@@ -94,7 +94,7 @@
     RESULT_DIV: ldarg.3
     ldarg.0      // val1
     ldarg.2      // val2
-    div
+    div          // делим
     stind.i4
 
     // divide case break
