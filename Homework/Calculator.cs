@@ -1,38 +1,34 @@
-﻿namespace Calculator
+﻿using System;
+
+namespace Calculator
 {
     public static class Calculator
     {
-        public enum Operation : byte
+        public enum Operation
         {
             Plus,
             Minus,
-            Divide,
-            Multiply
+            Multiply,
+            Divide
         }
-        
-        public static bool Calculate(int val1, Operation operation, int val2, out int result)
+
+        public static int Calculate(int val1, int val2, Operation operation)
         {
-            result = 0;
             switch (operation)
             {
-                case Calculator.Operation.Plus:
-                    result = val1 + val2;
-                    break;
-                case Calculator.Operation.Minus:
-                    result = val1 - val2;
-                    break;
-                case Calculator.Operation.Multiply:
-                    result = val1 * val2;
-                    break;
-                case Calculator.Operation.Divide:
+                case Operation.Plus:
+                    return val1 + val2;
+                case Operation.Minus:
+                    return val1 - val2;
+                case Operation.Multiply:
+                    return val1 * val2;
+                case Operation.Divide:
                     if (val2 == 0)
-                    {
-                        return true;
-                    }
-                    result = val1 / val2;
-                    break;
+                        throw ParserExceptions.AttemptToDivideByZero;
+                    return val1 / val2;
+                default:
+                    throw ParserExceptions.OutOfRange;
             }
-            return false;
         }
     }
 }

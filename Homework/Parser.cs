@@ -3,10 +3,11 @@ namespace Calculator
 {
     public static class ParserExceptions
     {
-        public static readonly Exception NotEnoughArgs = new Exception("Not enough args");
-        public static readonly Exception WrongArgFormat = new Exception("Wrong arg format");
-        public static readonly Exception WrongOperation = new Exception("Wrong operation");
-        public static readonly Exception AttemptToDivideByZero = new Exception("Attempt to divide by zero");
+        public static readonly Exception NotEnoughArgs = new("Not enough args");
+        public static readonly Exception WrongArgFormat = new("Wrong arg format");
+        public static readonly Exception WrongOperation = new("Wrong operation");
+        public static readonly Exception AttemptToDivideByZero = new DivideByZeroException("Attempt to divide by zero");
+        public static readonly Exception OutOfRange = new ArgumentOutOfRangeException($"Arg Out of range");
     }
     
     public static class Parser
@@ -30,27 +31,25 @@ namespace Calculator
                 default:
                     operation = default;
                     return true;
-            };
+            }
+        
             return false;
         }
-        public static bool TryParseArgsOrQuit(string arg, out int result)
+
+        public static bool TryParseArgsOrQuit(string arg, out int val)
         {
-            if (!int.TryParse(arg, out result))
-            {
-                Console.WriteLine($"Value isn't int: {arg}");
-                return true;
-            }
-            return false;
+            if (int.TryParse(arg, out val)) 
+                return false;
+            Console.WriteLine($"Value isn't int: {arg}");
+            return true;
         }
 
         public static bool CheckArgsLengthOrQuit(string[] args)
         {
-            if (args.Length != 3)
-            {
-                Console.WriteLine($"The program requires 3 CLI arguments, but {args.Length} provided");
-                return true;
-            }
-            return false;
+            if (args.Length == 3)
+                return false;
+            Console.WriteLine($"The program requires 3 CLI arguments, but {args.Length} provided");
+            return true;
         }
     }
 }
