@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ILLibrary\ILLibrary.ilproj" />
+    <ProjectReference Include="..\HW2\ILLibrary\ILLibrary.ilproj" />
   </ItemGroup>
 
 </Project>
