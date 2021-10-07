@@ -9,18 +9,6 @@
             Divide,
             Multiply
         }
-
-        // public static int Calculate(int val1, Operation operation, int val2)
-        // {
-        //     return operation switch
-        //     {
-        //         Operation.Plus => val1 + val2,
-        //         Operation.Minus => val1 - val2,
-        //         Operation.Multiply => val1 * val2,
-        //         Operation.Divide => val1 / val2,
-        //         _ => throw new System.NotImplementedException()
-        //     };
-        // }
         
         public static bool Calculate(int val1, Operation operation, int val2, out int result)
         {
