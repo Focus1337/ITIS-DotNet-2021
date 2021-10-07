@@ -1,25 +1,12 @@
 ﻿using System;
-using Calculator;
+using FSLibrary;
 using Xunit;
+using static Calculator.Program;
 
 namespace CalculatorTests
 {
     public class ParserTests
     {
-        [Theory]
-        [InlineData("+", false)]
-        [InlineData("-", false)]
-        [InlineData("*", false)]
-        [InlineData("/", false)]
-        [InlineData("6", true)]
-        [InlineData("33", true)]
-        [InlineData("++", true)]
-        public void TryParseOperatorOrQuit_ReturnFalseOrTrue(string arg, bool result)
-        {
-            var expResult = Parser.TryParseOperatorOrQuit(arg, out _);
-            Assert.Equal(expResult, result);
-        }
-
         [Theory]
         [InlineData("21", false)]
         [InlineData("15", false)]
@@ -30,8 +17,8 @@ namespace CalculatorTests
         [InlineData("++", true)]
         public void TryParseArgOrQuit_ReturnFalseOrTrue(string arg, bool result)
         {
-            var expResult = Parser.TryParseArgsOrQuit(arg, out _);
-            Assert.Equal(expResult, result);
+            var resultExpected = ParserFs.TryParseArgsOrQuit(arg, out _);
+            Assert.Equal(resultExpected, result);
         }
 
         [Theory]
@@ -43,17 +30,14 @@ namespace CalculatorTests
         [InlineData(new[] {""}, true)]
         public void CheckArgsLengthOrQuit_ReturnFalseOrTrue(string[] args, bool result)
         {
-            var expResult = Parser.CheckArgsLengthOrQuit(args);
-            Assert.Equal(expResult, result);
+            var resultExpected = ParserFs.CheckArgsLengthOrQuit(args);
+            Assert.Equal(resultExpected, result);
         }
-    }
 
-    public class ParserExceptionsTests
-    {
         [Theory]
         [InlineData("1", "2", "+")]
         [InlineData("3", "4", "-")]
-        [InlineData("5", "6","*")]
+        [InlineData("5", "6", "*")]
         [InlineData("77", "/")]
         [InlineData("3ergerg")]
         [InlineData("8", "9", "z", "+")]
@@ -61,11 +45,11 @@ namespace CalculatorTests
         {
             try
             {
-                Program.Main(args);
+                Main(args);
             }
             catch (Exception e)
             {
-                Assert.Equal(ParserExceptions.NotEnoughArgs, e);
+                Assert.Equal(CalculatorFs.NotEnoughArgs, e);
             }
         }
 
@@ -80,11 +64,11 @@ namespace CalculatorTests
         {
             try
             {
-                Program.Main(args);
+                Main(args);
             }
             catch (Exception e)
             {
-                Assert.Equal(ParserExceptions.WrongArgFormat, e);
+                Assert.Equal(CalculatorFs.WrongArgFormat, e);
             }
         }
 
@@ -100,11 +84,11 @@ namespace CalculatorTests
         {
             try
             {
-                Program.Main(args);
+                Main(args);
             }
             catch (Exception e)
             {
-                Assert.Equal(ParserExceptions.WrongOperation, e);
+                Assert.Equal(CalculatorFs.WrongOperation, e);
             }
         }
 
@@ -117,31 +101,31 @@ namespace CalculatorTests
         {
             try
             {
-                Program.Main(args);
+                Main(args);
             }
             catch (Exception e)
             {
-                Assert.Equal(ParserExceptions.AttemptToDivideByZero, e);
+                Assert.Equal(CalculatorFs.AttemptToDivideByZero, e);
             }
         }
+
+      /* CAN'T BE COVERED WITH TEST BECAUSE OF F# TYPE (analogue of enums) */
         
-        [Theory]
-        [InlineData("1", "2", "2")]
-        [InlineData("3", "4", "4")]
-        [InlineData("5", "6", "5")]
-        [InlineData("5", "0", "8")]
-        public void TryParseArgsAndOperator_OutOfRangeException(params string[] args)
-        {
-            try
-            {
-                Calculator.Calculator.Calculate(Convert.ToInt32(args[0]),
-                    Convert.ToInt32(args[1]),
-                    (Calculator.Calculator.Operation) Convert.ToInt32(args[2]));
-            }
-            catch (Exception e)
-            {
-                Assert.Equal(ParserExceptions.OutOfRange, e);
-            }
-        }
+        // [Theory]
+        // [InlineData(1, 2)]
+        // [InlineData(3, 4)]
+        // [InlineData(5, 6)]
+        // [InlineData(5, 0)]
+        // public void TryParseArgsAndOperator_OutOfRangeException(int val1, int val2)
+        // {
+        //     try
+        //     {
+        //         CalculatorFs.Calculate(val1, val2, CalculatorFs.Operation.Unassigned);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Assert.Equal(CalculatorFs.OutOfRange, e);
+        //     }
+        // }
     }
 }
