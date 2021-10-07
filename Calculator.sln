@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorTests", "HW1\Calc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILLibrary", "HW2\ILLibrary\ILLibrary.ilproj", "{0CAD7962-E873-4503-A8D1-42C06D209DB6}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSLibrary", "HW3\FSLibrary\FSLibrary.fsproj", "{3F1A4207-F85E-40CE-9F23-69258682387A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSLibrary", "HW4\FSLibrary\FSLibrary.fsproj", "{3F1A4207-F85E-40CE-9F23-69258682387A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
