@@ -13,6 +13,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSLibrary", "HW4\FSLibrary\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSLibraryRCE", "HW5\FSLibraryRCE\FSLibraryRCE.fsproj", "{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSRCETest", "HW5\FSRCETest\FSRCETest.csproj", "{8E54FB36-5EE4-4F69-9907-28E2CEBD021F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarterFs", "HW5\StarterFs\StarterFs.csproj", "{B1FD2F27-AF84-4BD2-867C-F88320EEE7B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E54FB36-5EE4-4F69-9907-28E2CEBD021F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E54FB36-5EE4-4F69-9907-28E2CEBD021F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E54FB36-5EE4-4F69-9907-28E2CEBD021F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E54FB36-5EE4-4F69-9907-28E2CEBD021F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1FD2F27-AF84-4BD2-867C-F88320EEE7B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1FD2F27-AF84-4BD2-867C-F88320EEE7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1FD2F27-AF84-4BD2-867C-F88320EEE7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1FD2F27-AF84-4BD2-867C-F88320EEE7B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

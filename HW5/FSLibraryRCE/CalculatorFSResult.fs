@@ -2,8 +2,8 @@
 
 open System
 
-type ResultBuilder(errorMessage: string) =
-    member b.Zero() = Error errorMessage
+type ResultBuilder(error: Exception) =
+    member b.Zero() = Error error
 
     member b.Bind(x, f) =
         match x with
@@ -14,8 +14,8 @@ type ResultBuilder(errorMessage: string) =
     member b.Combine(x, f) = f x
 
 
-module CalculatorFS =
-    let private defaultResult = ResultBuilder("unknown error")
+module CalculatorFs =
+    let private defaultResult = ResultBuilder(Exception("unknown error"))
 
     //let devByZero = "val2 was 0"
     
@@ -36,14 +36,14 @@ module CalculatorFS =
         | Multiply
 
     let inline calculate
-        (val1: Result<'T, string> when 'T: (static member (+) : 'T * 'T -> 'T) and 'T: (static member (-) :
+        (val1: Result<'T, Exception> when 'T: (static member (+) : 'T * 'T -> 'T) and 'T: (static member (-) :
                    'T * 'T -> 'T) and 'T: (static member (*) : 'T * 'T -> 'T) and 'T: (static member (/) : 'T * 'T -> 'T))
-        (val2: Result<'T, string>)
-        (operation: Result<Operation, string>)
+        (val2: Result<'T, Exception>)
+        (operation: Result<Operation, Exception>)
         =
         match operation with
         | Ok operation ->
-            ResultBuilder(AttemptToDivideByZero.Message) {
+            ResultBuilder(AttemptToDivideByZero) {
                 let! val11 = val1
                 let! val22 = val2
                 match operation with
