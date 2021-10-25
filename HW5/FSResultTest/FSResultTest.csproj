@@ -5,7 +5,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <RootNamespace>FSRCETest</RootNamespace>
+        <RootNamespace>FSResultTest</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

@@ -4,7 +4,7 @@
         <TargetFramework>net5.0</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <WarnOn>3390;$(WarnOn)</WarnOn>
-        <RootNamespace>FSLibraryRCE</RootNamespace>
+        <RootNamespace>FSLibraryResult</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
