@@ -4,6 +4,8 @@
         <TargetFramework>net5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>FSRCETest</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FSLibraryRCE\FSLibraryRCE.fsproj" />
+      <ProjectReference Include="..\FSLibraryResult\FSLibraryResult.fsproj" />
       <ProjectReference Include="..\StarterFs\StarterFs.csproj" />
     </ItemGroup>
 

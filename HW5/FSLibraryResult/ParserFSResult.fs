@@ -1,11 +1,9 @@
-﻿namespace FSLibraryRCE
+﻿namespace FSLibraryResult
 
 open System
-open FSLibraryRCE.CalculatorFs
+open FSLibraryResult.CalculatorFs
 
 module ParserFs =
-  //  let wrongOperation = "Wrong operation"
-
     let parseCalculatorOperation arg =
         ResultBuilder(WrongOperation) {
             if arg = "+" || arg = "-" || arg = "*" || arg = "/" then
@@ -16,11 +14,8 @@ module ParserFs =
                 | _ -> return Operation.Divide
         }
 
-   // let numberErrorMessage = "value is not int"
-   // let private resultNumber = ResultBuilder(numberErrorMessage)
     let private resultNumber = ResultBuilder(WrongArgFormat)
 
-    //надо эти 4 метода собрать в 1, вызывать в них T.TryParse. хз как это делать
     let parseInt (str: string) =
         resultNumber {
             let success, result = Int32.TryParse str

@@ -1,4 +1,4 @@
-﻿namespace FSLibraryRCE
+﻿namespace FSLibraryResult
 
 open System
 
@@ -15,18 +15,11 @@ type ResultBuilder(error: Exception) =
 
 
 module CalculatorFs =
-    let private defaultResult = ResultBuilder(Exception("unknown error"))
-
-    //let devByZero = "val2 was 0"
-    
-    let NotEnoughArgs = Exception("Not enough args")
-    
-    let WrongArgFormat = Exception("Wrong arg format")
-     
-    let WrongOperation = Exception("Wrong operation")
-     
-    let AttemptToDivideByZero = DivideByZeroException("Attempt to divide by zero")
-    
+    let private defaultResult = ResultBuilder(Exception("Unassigned exception"))    
+    let NotEnoughArgs = Exception("Not enough args") 
+    let WrongArgFormat = Exception("Wrong arg format")     
+    let WrongOperation = Exception("Wrong operation")    
+    let AttemptToDivideByZero = DivideByZeroException("Attempt to divide by zero")  
     let OutOfRange = ArgumentOutOfRangeException("Argument out of range")
 
     type Operation =
