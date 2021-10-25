@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILLibrary", "HW2\ILLibrary\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSLibrary", "HW4\FSLibrary\FSLibrary.fsproj", "{3F1A4207-F85E-40CE-9F23-69258682387A}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSLibraryRCE", "HW5\FSLibraryRCE\FSLibraryRCE.fsproj", "{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3F1A4207-F85E-40CE-9F23-69258682387A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F1A4207-F85E-40CE-9F23-69258682387A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F1A4207-F85E-40CE-9F23-69258682387A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E0B520-8A4D-431E-BA18-F5BF19C65EB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
