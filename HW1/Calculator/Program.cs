@@ -1,4 +1,5 @@
 ﻿using System;
+using FSLibrary;
 
 namespace Calculator
 {
@@ -6,17 +7,20 @@ namespace Calculator
     {
         public static int Main(string[] args)
         {
-            if (Parser.CheckArgsLengthOrQuit(args))
-                throw ParserExceptions.NotEnoughArgs;
-            
-            if (Parser.TryParseArgsOrQuit(args[0], out var val1) || Parser.TryParseArgsOrQuit(args[1], out var val2))
-                throw ParserExceptions.WrongArgFormat;
 
-            if (Parser.TryParseOperatorOrQuit(args[2], out var operation))
-                throw ParserExceptions.WrongOperation;
+            if (ParserFs.CheckArgsLengthOrQuit(args))
+                throw CalculatorFs.NotEnoughArgs;
 
-            var result = Calculator.Calculate(val1, val2, operation);
-            
+            if (ParserFs.TryParseArgsOrQuit(args[0], out var val1) ||
+                ParserFs.TryParseArgsOrQuit(args[1], out var val2))
+                throw CalculatorFs.WrongArgFormat;
+                
+            var operation = ParserFs.ParseCalculatorOperation(args[2]);
+            if (operation.Equals(CalculatorFs.Operation.Unassigned))
+                throw CalculatorFs.WrongOperation;
+
+            var result = CalculatorFs.Calculate(val1, val2, operation);
+
             Console.WriteLine($"Result : {result}");
 
             return 0;
