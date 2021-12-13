@@ -10,7 +10,7 @@ namespace WebAppHW9.Controllers
     public class CalculatorController : Controller
     {
         /// пробел считает за '+', поэтому их нельзя использовать
-        [HttpGet, Route("calc")]
+        [HttpGet, Route("calculator")]
         public IActionResult Calculate(string expressionString)
         {
             string AddPluses(string str) =>
@@ -23,11 +23,11 @@ namespace WebAppHW9.Controllers
 
             expressionString = AddPluses(expressionString);
             Console.WriteLine();
-            Console.WriteLine($"полечено выражение:\n\t{expressionString}");
+            Console.WriteLine($"Получено выражение:\n\t{expressionString}");
 
             var expression = ExpressionCalculator.FromString(expressionString);
             var res = ExpressionCalculator.ExecuteSlowly(expression);
-            Console.WriteLine($"результат через ExpressionCalculator:\n\t{res?.ToString(CultureInfo.InvariantCulture) ?? "ошибка"}");
+            Console.WriteLine($"Результат через ExpressionCalculator:\n\t{res?.ToString(CultureInfo.InvariantCulture) ?? "ошибка"}");
             return Ok(res?.ToString(CultureInfo.InvariantCulture) ?? "ошибка");
         }
     }

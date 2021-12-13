@@ -9,12 +9,12 @@ using Xunit.Abstractions;
 
 namespace WebAppHW9.Tests
 {
-    public class Integration
+    public class IntegrationTest
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly HttpClient _client;
 
-        public Integration(ITestOutputHelper testOutputHelper)
+        public IntegrationTest(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
             _client = new WebApplicationFactory<Startup>().CreateClient();
