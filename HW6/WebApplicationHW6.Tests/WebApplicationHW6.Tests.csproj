@@ -5,7 +5,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <RootNamespace>WebApplication.Tests</RootNamespace>
+        <RootNamespace>WebApplicationHW6.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

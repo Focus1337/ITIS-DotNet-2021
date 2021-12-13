@@ -5,7 +5,7 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
-open WebApplication
+open WebApplicationHW6
 open CalculatorHandler
 
 module private StartupUtil = 
