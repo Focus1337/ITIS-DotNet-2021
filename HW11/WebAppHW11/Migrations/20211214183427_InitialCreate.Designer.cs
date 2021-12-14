@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebAppHW10.Repository;
+using WebAppHW11.Repository;
 
-namespace WebAppHW10.Migrations
+namespace WebAppHW11.Migrations
 {
     [DbContext(typeof(ComputedExpressionsContext))]
     [Migration("20211214183427_InitialCreate")]
