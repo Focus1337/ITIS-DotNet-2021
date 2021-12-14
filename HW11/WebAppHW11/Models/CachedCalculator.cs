@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using WebAppHW11.Repository;
 
-namespace WebAppHW11.Models
-{
-    internal class CachedCalculator : ICachedCalculator
+namespace WebAppHW11.Models;
+
+internal class CachedCalculator : ICachedCalculator
 {
     private readonly ICalculator _calculator;
 
@@ -15,51 +15,55 @@ namespace WebAppHW11.Models
 
     public Expression FromString(string str)
     {
-        return decimal.TryParse(str, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedResult)
-            ? Expression.Constant(parsedResult)
-            : StringParsingHelper.TryFindMiddlePlus(ref str, out var beforePlus)
-                ? Compose(
-                    FromString(beforePlus),
-                    FromString(str[1..]),
-                    StringParsingHelper.ParseOperation(str[0]))
-                : StringParsingHelper.TryFindLastMultOrDiv(ref str, out var beforeOperation)
-                    ? Compose(
-                        FromString(beforeOperation),
-                        FromString(str[1..]),
-                        StringParsingHelper.ParseOperation(str[0]))
-                    : str![0] is '('
-                        ? StringParsingHelper.IsAllSingleBracketExpression(str)
-                            ? FromString(str[1..^1])
-                            : Compose(
-                                FromString(StringParsingHelper.TakeBrackets(ref str)),
-                                FromString(str[1..]),
-                                StringParsingHelper.ParseOperation(str[0]))
-                        : str[0] is '-' && StringParsingHelper.IsAllSingleBracketExpression(str[1..])
-                            ? Negotiate(FromString(str[2..^1]))
-                            : throw new Exception(str);
-
-        static BinaryExpression Compose(Expression e1, Expression e2, Operation operation) =>
-            operation switch
+        while (true)
+        {
+            if (decimal.TryParse(str, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedResult))
+                return Expression.Constant(parsedResult);
+            if (StringParsingHelper.TryFindMiddlePlus(ref str, out var beforePlus))
+                return Compose(FromString(beforePlus), FromString(str[1..]),
+                    StringParsingHelper.ParseOperation(str[0]));
+            if (StringParsingHelper.TryFindLastMultOrDiv(ref str, out var beforeOperation))
+                return Compose(FromString(beforeOperation), FromString(str[1..]),
+                    StringParsingHelper.ParseOperation(str[0]));
+            if (str![0] is '(')
             {
-                Operation.Plus => Expression.MakeBinary(ExpressionType.Add, e1, e2),
-                Operation.Minus => Expression.MakeBinary(ExpressionType.Subtract, e1, e2),
-                Operation.Mult => Expression.MakeBinary(ExpressionType.Multiply, e1, e2),
-                Operation.Div => Expression.MakeBinary(ExpressionType.Divide, e1, e2),
-                _ => throw new Exception("композишь без операции")
-            };
-        
-        static UnaryExpression Negotiate(Expression e) =>
-            Expression.MakeUnary(ExpressionType.Negate, e, default);
+                if (StringParsingHelper.IsAllSingleBracketExpression(str))
+                {
+                    str = str[1..^1];
+                    continue;
+                }
+
+                return Compose(FromString(StringParsingHelper.TakeBrackets(ref str)), FromString(str[1..]),
+                    StringParsingHelper.ParseOperation(str[0]));
+            }
+
+            return str[0] is '-' && StringParsingHelper.IsAllSingleBracketExpression(str[1..])
+                ? Negotiate(FromString(str[2..^1]))
+                : throw new Exception(str);
+
+            static BinaryExpression Compose(Expression e1, Expression e2, Operation operation) =>
+                operation switch
+                {
+                    Operation.Plus => Expression.MakeBinary(ExpressionType.Add, e1, e2),
+                    Operation.Minus => Expression.MakeBinary(ExpressionType.Subtract, e1, e2),
+                    Operation.Mult => Expression.MakeBinary(ExpressionType.Multiply, e1, e2),
+                    Operation.Div => Expression.MakeBinary(ExpressionType.Divide, e1, e2),
+                    _ => throw new Exception("Composing with no operation")
+                };
+
+            static UnaryExpression Negotiate(Expression e) => Expression.MakeUnary(ExpressionType.Negate, e, default);
+        }
     }
-    
+
     public decimal CalculateWithCache(Expression expression, ExpressionsCache cache)
     {
-        var res = (decimal) (new SlowExecutor(cache, _calculator).Visit(expression) as ConstantExpression)!.Value!;
+        var res = (decimal) (new SlowExecutor(cache, _calculator).StartVisiting(expression) as ConstantExpression)!
+            .Value!;
         cache.SaveChanges();
         return res;
     }
 
-    private class SlowExecutor : ExpressionVisitor
+    private class SlowExecutor
     {
         private readonly ExpressionsCache _cache;
         private readonly ICalculator _calculator;
@@ -70,21 +74,26 @@ namespace WebAppHW11.Models
             _calculator = calculator;
         }
 
-        protected override Expression VisitBinary(BinaryExpression node)
+        public Expression StartVisiting(Expression expression) =>
+            Visit((dynamic) expression);
+
+        private Expression Visit(BinaryExpression node)
         {
             var leftResult = Task.Run(
                 () => (ConstantExpression) (
                     node.Left is BinaryExpression leftBinary
-                        ? VisitBinary(leftBinary)
+                        ? Visit(leftBinary)
                         : node.Left));
             var rightResult = Task.Run(
                 () => (ConstantExpression) (
                     node.Right is BinaryExpression rightBinary
-                        ? VisitBinary(rightBinary)
+                        ? Visit(rightBinary)
                         : node.Right));
 
             Task.WaitAll(leftResult, rightResult);
-            var delay = Task.Delay(1000); //глянь на это
+
+            //TODO:delay
+            var delay = Task.Delay(1000);
 
             var expressionWithoutRes = new ComputedExpression
             {
@@ -99,7 +108,10 @@ namespace WebAppHW11.Models
             {
                 var res = _calculator.Calculate(expressionWithoutRes.V1, expressionWithoutRes.V2,
                     expressionWithoutRes.Op);
-                delay.Wait(); //нифига я умный да?
+
+                //TODO:delay
+                delay.Wait();
+
                 return res;
             });
 
@@ -113,17 +125,16 @@ namespace WebAppHW11.Models
                 -1m => Operation.Minus,
                 0.5m => Operation.Div,
                 2m => Operation.Mult,
-                _ => throw new Exception("метод не соответствует ни одной операции")
+                _ => throw new Exception("invalid operation")
             };
 
-        protected override Expression VisitUnary(UnaryExpression node)
+        private Expression Visit(UnaryExpression node)
         {
             var nodeResult = (node.Operand is BinaryExpression binary
-                    ? VisitBinary(binary)
+                    ? Visit(binary)
                     : node.Operand)
                 as ConstantExpression;
             return Expression.Constant(node.Method?.Invoke(default, new[] {nodeResult?.Value}));
         }
     }
-}
 }

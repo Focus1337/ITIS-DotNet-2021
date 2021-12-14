@@ -5,15 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAppHW11.Models;
 using WebAppHW11.Repository;
+using WebAppHW11.Services;
 
 namespace WebAppHW11
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -24,17 +22,17 @@ namespace WebAppHW11
             services.AddScoped<ExpressionsCache>();
             services.AddSingleton<ICalculator, Calculator>();
             services.AddSingleton<ICachedCalculator, CachedCalculator>();
+            services.AddSingleton<ExceptionHandler>();
             
             services.AddControllersWithViews();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
