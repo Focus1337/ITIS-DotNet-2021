@@ -19,7 +19,7 @@ namespace WebAppHW10.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebAppHW10.Repository.ComputedExpression", b =>
+            modelBuilder.Entity("WebAppHW11.Repository.ComputedExpression", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

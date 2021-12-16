@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebAppHW10.Repository;
+using WebAppHW11.Repository;
 
-namespace WebAppHW10.Migrations
+namespace WebAppHW11.Migrations
 {
     [DbContext(typeof(ComputedExpressionsContext))]
-    [Migration("20211214183427_InitialCreate")]
-    partial class InitialCreate
+    partial class ComputedExpressionsContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
