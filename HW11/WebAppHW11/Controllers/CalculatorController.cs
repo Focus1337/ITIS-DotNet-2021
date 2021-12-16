@@ -9,60 +9,67 @@ using Microsoft.Extensions.Logging;
 using WebAppHW11.Models;
 using WebAppHW11.Services;
 
-namespace WebAppHW11.Controllers;
-
-public class CalculatorController : Controller
+namespace WebAppHW11.Controllers
 {
-    // пробел считает за '+', поэтому нельзя использовать пробелы
-    [HttpGet, Route("calculate")]
-    public IActionResult Calculate(
-        [FromServices] ExceptionHandler exceptionHandler,
-        [FromServices] ExpressionsCache cache,
-        [FromServices] ICachedCalculator calculator,
-        string expressionString)
+    public class CalculatorController : Controller
     {
-        string AddPluses(string str) =>
-            str.Aggregate(new StringBuilder(), (builder, c) => builder.Append(c switch
+        private readonly ExceptionHandler _exceptionHandler;
+
+        public CalculatorController(ExceptionHandler exceptionHandler)
+        {
+            _exceptionHandler = exceptionHandler;
+        }
+        
+        // пробел считает за '+', поэтому нельзя использовать пробелы
+        [HttpGet, Route("calculate")]
+        public IActionResult Calculate(
+            [FromServices] ExpressionsCache cache,
+            [FromServices] ICachedCalculator calculator,
+            string expressionString)
+        {
+            string AddPluses(string str) =>
+                str.Aggregate(new StringBuilder(), (builder, c) => builder.Append(c switch
+                {
+                    ' ' => "+",
+                    '-' => builder.Length is not 0 && !"()*/+-".Contains(builder[^1]) ? "+-" : "-",
+                    _ => c.ToString()
+                })).ToString();
+
+            expressionString = AddPluses(expressionString);
+            Console.WriteLine();
+            Console.WriteLine($"получено выражение:\n\t{expressionString}");
+
+            Expression expression;
+            try
             {
-                ' ' => "+",
-                '-' => builder.Length is not 0 && !"()*/+-".Contains(builder[^1]) ? "+-" : "-",
-                _ => c.ToString()
-            })).ToString();
+                expression = calculator.FromString(expressionString);
+            }
+            catch (Exception e)
+            {
+                _exceptionHandler.DoHandle(LogLevel.Error, e);
+                return BadRequest();
+            }
 
-        expressionString = AddPluses(expressionString);
-        Console.WriteLine();
-        Console.WriteLine($"получено выражение:\n\t{expressionString}");
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-        Expression expression;
-        try
-        {
-            expression = calculator.FromString(expressionString);
-        }
-        catch (Exception e)
-        {
-            exceptionHandler.DoHandle(LogLevel.Error, e);
-            return BadRequest();
-        }
+            decimal result;
+            try
+            {
+                result = calculator.CalculateWithCache(expression, cache);
+            }
+            catch (Exception e)
+            {
+                _exceptionHandler.DoHandle(LogLevel.Error, e);
+                return BadRequest();
+            }
 
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-        
-        decimal result;
-        try
-        {
-            result = calculator.CalculateWithCache(expression, cache);
+            stopwatch.Stop();
+
+            Console.WriteLine(
+                $"Result by ExpressionCalculator:\n\t{result.ToString()}");
+            return Ok(result.ToString(CultureInfo.InvariantCulture) +
+                      $" took time: {stopwatch.ElapsedMilliseconds} ms");
         }
-        catch (Exception e)
-        {
-            exceptionHandler.DoHandle(LogLevel.Error, e);
-            return BadRequest();
-        }
-        
-        stopwatch.Stop();
-        
-        Console.WriteLine(
-            $"Result by ExpressionCalculator:\n\t{result.ToString()}");
-        return Ok(result.ToString(CultureInfo.InvariantCulture) +
-                  $" took time: {stopwatch.ElapsedMilliseconds} ms");
     }
 }
