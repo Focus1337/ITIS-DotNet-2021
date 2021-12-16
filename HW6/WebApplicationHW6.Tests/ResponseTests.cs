@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 
-namespace WebApplication.Tests
+namespace WebApplicationHW6.Tests
 {
     public class ResponseTests
     {

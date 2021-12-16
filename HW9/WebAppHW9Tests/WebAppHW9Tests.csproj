@@ -5,11 +5,10 @@
 
         <IsPackable>false</IsPackable>
 
-        <RootNamespace>WebApplicationHW6.Tests</RootNamespace>
+        <RootNamespace>WebAppHW9.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -23,7 +22,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WebApplicationHW6\WebApplicationHW6.fsproj" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.12" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\WebAppHW9\WebAppHW9.csproj" />
+    </ItemGroup>
+    
 </Project>
