@@ -55,6 +55,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HW11", "HW11", "{4B22ABD5-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppHW11", "HW11\WebAppHW11\WebAppHW11.csproj", "{81234DCE-4353-4031-891F-B9850DF4B36F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HW12", "HW12", "{2F4A751D-41ED-474D-A82E-8F7A0D3D20E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
