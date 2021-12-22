@@ -62,7 +62,7 @@ namespace WebAppHW12.Models
                     break;
                 }
 
-            if (closingIndex is default(int)) throw new Exception("несостыковочка по скобкам");
+            if (closingIndex is default(int)) throw new Exception("braces error");
 
             var res = str[1..closingIndex];
             str = (closingIndex + 1) < str.Length ? str[(closingIndex + 1)..] : string.Empty;

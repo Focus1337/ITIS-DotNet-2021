@@ -1,16 +1,10 @@
 ﻿module GiraffeHW12.CalculatorAdapter
 
-open FSLibraryResult
+open Microsoft.FSharp.Core
+open WebAppHW12.Models
 
-let calculate val1 val2 operation =
-    let val1 = ParserFs.parseDecimal val1
-    let val2 = ParserFs.parseDecimal val2
-    let operation =
-        match operation with
-        | "sum" -> "+"
-        | "dif" -> "-"
-        | "div" -> "/"
-        | "mult" -> "*"
-        | _ -> ""
-    let operation = ParserFs.parseCalculatorOperation operation
-    CalculatorFs.calculate val1 val2 operation
+
+let calculate (calculator: ICachedCalculator) (cache : ExpressionsCache) str : decimal =
+    let str = ExpressionFixer.Fix(str)
+    let expression = calculator.FromString(str)
+    calculator.CalculateWithCache(expression, cache)

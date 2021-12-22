@@ -7,13 +7,14 @@ open Microsoft.Extensions.DependencyInjection
 open Giraffe
 open GiraffeHW12
 open CalculatorHandler
+open WebAppHW12.Models
 
-module private StartupUtil = 
+module private StartupUtil =        
     let webApp =
         choose [
             GET >=> choose [
                 route "/china" >=> text "ching chang chong"
-                route "/calc" >=> CalculatorHttpHandler
+                route "/calculate" >=> CalculatorHttpHandler(CachedCalculator(Calculator()), ExpressionsCache())
                 ]
             ]
         

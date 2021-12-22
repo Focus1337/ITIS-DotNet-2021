@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\HW5\FSLibraryResult\FSLibraryResult.fsproj" />
+      <ProjectReference Include="..\WebAppHW12\WebAppHW12.csproj" />
     </ItemGroup>
     
 </Project>
