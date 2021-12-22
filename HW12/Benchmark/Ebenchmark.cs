@@ -16,7 +16,7 @@ namespace Benchmark
         public Ebenchmark()
         {
             _clientCs = new WebApplicationFactory<Startup>().CreateClient();
-            _clientFs = new WebApplicationFactory<Startup>().CreateClient();
+            _clientFs = new WebApplicationFactory<GiraffeHW12.Startup>().CreateClient();
         }
 
         //private const string ResponseBody = "https://localhost:5001/calculate?expressionString=2+3";

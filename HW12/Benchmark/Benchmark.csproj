@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\GiraffeHW12\GiraffeHW12.fsproj" />
       <ProjectReference Include="..\WebAppHW12\WebAppHW12.csproj" />
     </ItemGroup>
 

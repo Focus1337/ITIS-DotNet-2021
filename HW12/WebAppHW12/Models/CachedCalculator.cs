@@ -7,7 +7,7 @@ using WebAppHW12.Repository;
 
 namespace WebAppHW12.Models
 {
-    internal class CachedCalculator : ICachedCalculator
+    public class CachedCalculator : ICachedCalculator
     {
         private readonly ICalculator _calculator;
 
