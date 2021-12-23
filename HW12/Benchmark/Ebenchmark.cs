@@ -18,32 +18,9 @@ namespace Benchmark
             _clientCs = new WebApplicationFactory<Startup>().CreateClient();
             _clientFs = new WebApplicationFactory<GiraffeHW12.Startup>().CreateClient();
         }
-
-        //private const string ResponseBody = "https://localhost:5001/calculate?expressionString=2+3";
-
-        // private static async Task Sum(HttpClient client) =>
-        //     await client.GetAsync("https://localhost:5001/calculate?expressionString=2+3"); //($"{ResponseBody}");
-        //
-        // [Benchmark]
-        // public async Task SumCs() => await Sum(_clientCs);
-        // // await _clientCs.GetAsync($"{ResponseBody}");
-        //
-        // [Benchmark]
-        // public async Task SumFs() => await Sum(_clientFs);
-        // //await _clientFs.GetAsync($"{ResponseBody}");
-        //
-        // private static async Task SomeExpression(HttpClient client) =>
-        //     await client.GetAsync("https://localhost:5001/calculate?expressionString=(2+3)/12*7+8*9");
-        //
-        // [Benchmark]
-        // public async Task ExpressionCs() => await SomeExpression(_clientCs);
-        //
-        // [Benchmark]
-        // public async Task ExpressionFs() => await SomeExpression(_clientFs);
-
-
+        
         private static void Sum(HttpClient client) =>
-            client.GetAsync("https://localhost:5001/calculate?expressionString=2+3"); //($"{ResponseBody}");
+            client.GetAsync("https://localhost:5001/calculate?expressionString=2+3");
 
         [Benchmark]
         public void SumCs() => Sum(_clientCs);
@@ -52,7 +29,7 @@ namespace Benchmark
         public void SumFs() => Sum(_clientFs);
 
         private static void SomeExpression(HttpClient client) =>
-            client.GetAsync("https://localhost:5001/calculate?expressionString=(2+3)/12*7+8*9");
+            client.GetAsync("https://localhost:5001/calculate?expressionString=(5+34)/11*8*9+5");
 
         [Benchmark]
         public void ExpressionCs() => SomeExpression(_clientCs);
