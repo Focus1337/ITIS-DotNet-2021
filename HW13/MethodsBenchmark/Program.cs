@@ -1,14 +1,14 @@
-﻿using System;
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
 
-namespace Benchmark;
+BenchmarkRunner.Run<Benchmarks>();
 
 [MaxColumn, MinColumn]
-public class MethodsBenchmark
+public class Benchmarks
 {
     private static readonly Test test = new();
     private static readonly int argument = Random.Shared.Next();
-
+    
     [Benchmark]
     public void Static() => TestBase.StaticMethod(argument);
 
@@ -31,12 +31,13 @@ public class MethodsBenchmark
 internal class TestBase
 {
     public string GeneralMethod(int num) => num.ToString();
-    public virtual string VirtualMethod(int num) => num.ToString();
     public static string StaticMethod(int num) => num.ToString();
+    public virtual string VirtualMethod(int num) => num.ToString();
     public string GenericMethod<T>(T num) where T : struct => num.ToString()!;
     public string DynamicMethod(dynamic num) => num.ToString();
+
     public string ReflectionMethod(int num) =>
-        (typeof(TestBase).GetMethod("StaticMethod")!.Invoke(default, new[] {(object) num}) as string)!;
+        (typeof(TestBase).GetMethod("StaticMethod")!.Invoke(default, new[] { (object)num }) as string)!;
 }
 
-internal class Test : TestBase { }
+internal class Test : TestBase { } // for Virtual method
