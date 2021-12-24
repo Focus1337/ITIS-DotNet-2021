@@ -15,4 +15,8 @@
       <ProjectReference Include="..\WebAppHW13\WebAppHW13.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="Pages\Calculator\Calculate.cshtml" />
+    </ItemGroup>
+
 </Project>

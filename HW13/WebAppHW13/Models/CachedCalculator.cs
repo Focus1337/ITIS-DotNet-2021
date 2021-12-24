@@ -47,30 +47,26 @@ public class CachedCalculator : ICachedCalculator
                 Operation.Div => Expression.MakeBinary(ExpressionType.Divide, e1, e2),
                 _ => throw new Exception("no operation provided")
             };
-
+        
         static UnaryExpression Negotiate(Expression e) =>
             Expression.MakeUnary(ExpressionType.Negate, e, default);
     }
+    
+    public decimal CalculateWithCache(Expression expression, ExpressionsCache cache) => 
+        (decimal) (new Executor(cache, _calculator).StartVisiting(expression) as ConstantExpression)!.Value!;
 
-    public decimal CalculateWithCache(Expression expression, ExpressionsCache cache)
-    {
-        var res = (decimal) (new SlowExecutor(cache, _calculator).StartVisiting(expression) as ConstantExpression)!
-            .Value!;
-        return res;
-    }
-
-    private class SlowExecutor
+    private class Executor
     {
         private readonly ExpressionsCache _cache;
         private readonly ICalculator _calculator;
 
-        public SlowExecutor(ExpressionsCache cache, ICalculator calculator)
+        public Executor(ExpressionsCache cache, ICalculator calculator)
         {
             _cache = cache;
             _calculator = calculator;
         }
 
-        public Expression StartVisiting(Expression expression) =>
+        public Expression StartVisiting(Expression expression) => 
             Visit((dynamic) expression);
 
         private Expression Visit(BinaryExpression node)
@@ -99,7 +95,6 @@ public class CachedCalculator : ICachedCalculator
             {
                 var res = _calculator.Calculate(expressionWithoutRes.V1, expressionWithoutRes.V2,
                     expressionWithoutRes.Op);
-
                 return res;
             });
 
