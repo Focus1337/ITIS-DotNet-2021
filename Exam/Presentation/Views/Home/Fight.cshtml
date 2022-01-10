@@ -1,26 +1,33 @@
-﻿@* @model dynamic *@
-@* *@
-@* @{ *@
-@*     ViewBag.Title = "title"; *@
-@*     Layout = "_Layout"; *@
-@* } *@
-@* *@
-@* @if (ViewBag.Status != null) *@
-@* { *@
-@*     <h2>@ViewBag.Status</h2> *@
-@* } *@
-
-@model Presentation.Controllers.HomeController.FightModel
+﻿@model dynamic
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Fight result";
     Layout = "_Layout";
+    var character =
+       (CalculatedCharacter)ViewBag.Calculated;
 }
-
-@Html.DisplayFor(model => model.Character)
-
-@foreach (var str in Model!.Log.Split('\n'))
+@if (ViewBag.Calculated != null)
 {
-    <p>@str</p>
+    <p>
+        Id = @character.Id<br/>
+        Name = @character.Name<br/>
+        HitPoints =  @character.HitPoints<br/>
+        AttackModifier =  @character.AttackModifier<br/>
+        DamageModifier =  @character.DamageModifier<br/>
+        DamageDiceCount =  @character.DamageDiceCount<br/>
+        DamageDiceEdges =  @character.DamageDiceEdges<br/>
+        ArmourClass =   @character.ArmourClass<br/>
+        AttackPerRound =   @character.AttackPerRound<br/>
+        MinAcToAlwaysHit = @character.MinAcToAlwaysHit<br/>
+        MinDamagePerRound = @character.MinDamagePerRound<br/>
+        MaxDamagePerRound = @character.MaxDamagePerRound<br/>
+    </p>
 }
 
+@if (ViewBag.Log != null)
+{
+    @foreach (var item in ViewBag.Log)
+    {
+        <p>@item</p>
+    }
+}
