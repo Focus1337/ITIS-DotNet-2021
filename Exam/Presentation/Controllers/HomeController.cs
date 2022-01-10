@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 
@@ -6,26 +7,43 @@ namespace Presentation.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private readonly HttpClient _client;
+    public HomeController()
     {
-        _logger = logger;
+        var clientHandler = new HttpClientHandler();
+        clientHandler.ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true;
+        _client = new HttpClient(clientHandler);
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> IndexAsync()
     {
+        var responseMessage = await _client.GetAsync("https://localhost:7156/GetAllCharacters");
+        var content = responseMessage.Content;
+#if (DEBUG == true)
+        Console.WriteLine(await content.ReadAsStringAsync());
+#endif
+        ViewBag.Characters = (await content.ReadFromJsonAsync<List<Character>>())!;
+        
+        responseMessage = await _client.GetAsync("https://localhost:7156/GetAllMonsters");
+        content = responseMessage.Content;
+#if (DEBUG == true)
+        Console.WriteLine(await content.ReadAsStringAsync());
+#endif
+        ViewBag.Monsters = (await content.ReadFromJsonAsync<List<Monster>>())!;
+        
         return View();
     }
 
-    public IActionResult Privacy()
+    [HttpPost]
+    public async Task<IActionResult> Fight(int characterId, int monsterId)
     {
-        return View();
+        ViewBag.Status = $"{characterId}, {monsterId}";
+        return View("Fight");
     }
+
+    public IActionResult Privacy() => View();
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
-    }
+    public IActionResult Error() => 
+        View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
 }

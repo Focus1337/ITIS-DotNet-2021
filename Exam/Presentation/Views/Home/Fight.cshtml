@@ -1,0 +1,11 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@if (ViewBag.Status != null)
+{
+    <h2>@ViewBag.Status</h2>
+}

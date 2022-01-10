@@ -30,11 +30,13 @@ public class MonsterController : ControllerBase
         monster = new Monster
         {
             Name = newMonster.Name,
+            HitPoints = newMonster.HitPoints,
             AttackModifier = newMonster.AttackModifier,
-            AttackPerRound = newMonster.AttackPerRound,
-            // DamageDicesCount = newMonster.DamageDicesCount,
-            // DamageDiceType = newMonster.DamageDiceType,
-            // WeaponModifier = newMonster.WeaponModifier
+            DamageModifier = newMonster.DamageModifier,
+            DamageDiceCount = newMonster.DamageDiceCount,
+            DamageDiceEdges = newMonster.DamageDiceEdges,
+            ArmourClass = newMonster.ArmourClass,
+            AttackPerRound = newMonster.AttackPerRound
         };
 
         await _repository.AddMonsterAsync(monster);
@@ -58,13 +60,15 @@ public class MonsterController : ControllerBase
         var monster = await _repository.GetMonsterAsync(updatedMonster.Id);
         if (monster is null)
             return BadRequest($"Monster with id={updatedMonster.Id} isn't exists");
-
+        
         monster.Name = updatedMonster.Name;
+        monster.HitPoints = updatedMonster.HitPoints;
         monster.AttackModifier = updatedMonster.AttackModifier;
-        monster.AttackPerRound = updatedMonster.AttackPerRound;
-        // monster.DamageDicesCount = updatedMonster.DamageDicesCount;
-        // monster.DamageDiceType = updatedMonster.DamageDiceType;
-        // monster.WeaponModifier = updatedMonster.WeaponModifier;
+        monster.DamageModifier = updatedMonster.DamageModifier;
+        monster.DamageDiceCount = updatedMonster.DamageDiceCount;
+        monster.DamageDiceEdges = updatedMonster.DamageDiceEdges;
+        monster.ArmourClass = updatedMonster.ArmourClass;
+        monster. AttackPerRound = updatedMonster.AttackPerRound;
 
         await _repository.UpdateMonsterAsync(monster);
         return Ok();

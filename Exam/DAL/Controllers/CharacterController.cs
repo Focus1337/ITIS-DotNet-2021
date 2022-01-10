@@ -13,10 +13,6 @@ public class CharacterController : ControllerBase
     public CharacterController(CharacterRepository repository) =>
         _repository = repository;
 
-    // [HttpGet]
-    // public IActionResult GetAllCharacterNamesAndId() =>
-    //     new JsonResult(_repository.GetAllCharacterNamesAndId());
-
     [HttpGet]
     public async Task<IActionResult> GetAllCharacters() =>
         new JsonResult(await _repository.GetAllCharacters());
@@ -36,11 +32,13 @@ public class CharacterController : ControllerBase
         character = new Character
         {
             Name = newCharacter.Name,
+            HitPoints = newCharacter.HitPoints,
             AttackModifier = newCharacter.AttackModifier,
-            AttackPerRound = newCharacter.AttackPerRound,
-            // DamageDicesCount = newCharacter.DamageDicesCount,
-            // DamageDiceType = newCharacter.DamageDiceType,
-            // WeaponModifier = newCharacter.WeaponModifier
+            DamageModifier = newCharacter.DamageModifier,
+            DamageDiceCount = newCharacter.DamageDiceCount,
+            DamageDiceEdges = newCharacter.DamageDiceEdges,
+            ArmourClass = newCharacter.ArmourClass,
+            AttackPerRound = newCharacter.AttackPerRound
         };
 
         await _repository.AddCharacterAsync(character);
@@ -67,13 +65,15 @@ public class CharacterController : ControllerBase
 
         if (character is null)
             return BadRequest($"Character with id={updatedCharacter.Id} isn't exists");
-
+        
         character.Name = updatedCharacter.Name;
+        character.HitPoints = updatedCharacter.HitPoints;
         character.AttackModifier = updatedCharacter.AttackModifier;
+        character.DamageModifier = updatedCharacter.DamageModifier;
+        character.DamageDiceCount = updatedCharacter.DamageDiceCount;
+        character.DamageDiceEdges = updatedCharacter.DamageDiceEdges;
+        character.ArmourClass = updatedCharacter.ArmourClass;
         character.AttackPerRound = updatedCharacter.AttackPerRound;
-        // character.DamageDicesCount = updatedCharacter.DamageDicesCount;
-        // character.DamageDiceType = updatedCharacter.DamageDiceType;
-        // character.WeaponModifier = updatedCharacter.WeaponModifier;
 
         await _repository.UpdateCharacterAsync(character);
         return Ok();
