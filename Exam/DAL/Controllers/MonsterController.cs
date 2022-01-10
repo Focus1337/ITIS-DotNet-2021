@@ -21,6 +21,15 @@ public class MonsterController : ControllerBase
     public async Task<IActionResult> GetMonsterById([FromQuery] int id) =>
         new JsonResult(await _repository.GetMonsterAsync(id));
 
+    [HttpGet]
+    public async Task<IActionResult> GetRandomMonster([FromQuery] int id)
+    {
+        var count = (await _repository.GetAllMonsters()).Count();
+        var random = new Random().Next(count);
+
+        return new JsonResult(await _repository.GetMonsterAsync(random));
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddMonster(Monster newMonster)
     {

@@ -24,13 +24,14 @@ public class HomeController : Controller
 #endif
         ViewBag.Characters = (await content.ReadFromJsonAsync<List<Character>>())!;
         
-        responseMessage = await _client.GetAsync("https://localhost:7156/GetAllMonsters");
+        responseMessage = await _client.GetAsync("https://localhost:7156/GetRandomMonster");
         content = responseMessage.Content;
 #if (DEBUG == true)
         Console.WriteLine(await content.ReadAsStringAsync());
 #endif
-        ViewBag.Monsters = (await content.ReadFromJsonAsync<List<Monster>>())!;
         
+        ViewBag.RandomMonster = (await content.ReadFromJsonAsync<Monster?>())!;
+
         return View();
     }
 
@@ -38,6 +39,7 @@ public class HomeController : Controller
     public async Task<IActionResult> Fight(int characterId, int monsterId)
     {
         ViewBag.Status = $"{characterId}, {monsterId}";
+        
         return View("Fight");
     }
 
