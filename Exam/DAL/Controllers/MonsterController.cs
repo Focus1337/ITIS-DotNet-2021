@@ -22,12 +22,10 @@ public class MonsterController : ControllerBase
         new JsonResult(await _repository.GetMonsterAsync(id));
 
     [HttpGet]
-    public async Task<IActionResult> GetRandomMonster([FromQuery] int id)
+    public IActionResult GetRandomMonster([FromServices] ApplicationContext dataContext, [FromQuery] int id)
     {
-        var count = (await _repository.GetAllMonsters()).Count();
-        var random = new Random().Next(count);
-
-        return new JsonResult(await _repository.GetMonsterAsync(random));
+        var random = Random.Shared.Next(dataContext.Monsters.Count());
+        return new JsonResult((random > 0 ? dataContext.Monsters.Skip(random) : dataContext.Monsters).First());
     }
 
     [HttpPost]
@@ -69,7 +67,7 @@ public class MonsterController : ControllerBase
         var monster = await _repository.GetMonsterAsync(updatedMonster.Id);
         if (monster is null)
             return BadRequest($"Monster with id={updatedMonster.Id} isn't exists");
-        
+
         monster.Name = updatedMonster.Name;
         monster.HitPoints = updatedMonster.HitPoints;
         monster.AttackModifier = updatedMonster.AttackModifier;
@@ -77,7 +75,7 @@ public class MonsterController : ControllerBase
         monster.DamageDiceCount = updatedMonster.DamageDiceCount;
         monster.DamageDiceEdges = updatedMonster.DamageDiceEdges;
         monster.ArmourClass = updatedMonster.ArmourClass;
-        monster. AttackPerRound = updatedMonster.AttackPerRound;
+        monster.AttackPerRound = updatedMonster.AttackPerRound;
 
         await _repository.UpdateMonsterAsync(monster);
         return Ok();

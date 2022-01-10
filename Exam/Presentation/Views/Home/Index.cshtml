@@ -1,33 +1,44 @@
-﻿@{
-    ViewData["Title"] = "Dnd";
+﻿@* @{ *@
+@*     ViewData["Title"] = "Dnd"; *@
+@* } *@
+@* *@
+@* <div class="text-center"> *@
+@*     <form asp-controller="Home" asp-action="Fight" method="post"> *@
+@*         <select name="characterId"> *@
+@*             @if (ViewBag.Characters != null) *@
+@*             { *@
+@*                 @foreach (var character in ViewBag.Characters) *@
+@*                 { *@
+@*                     <option value="@character.Id"> *@
+@*                         @character.Name *@
+@*                     </option> *@
+@*                 } *@
+@*             } *@
+@*         </select> *@
+@*          *@
+@*         <select name="monsterId"> *@
+@*             @if (ViewBag.Monsters != null) *@
+@*             { *@
+@*                 @foreach (var monster in ViewBag.Monsters) *@
+@*                 { *@
+@*                     <option value="@monster.Id"> *@
+@*                         @monster.Name *@
+@*                     </option> *@
+@*                 } *@
+@*             } *@
+@*         </select> *@
+@*          *@
+@*         <button type="submit">Fight!</button> *@
+@*     </form> *@
+@* </div> *@
+
+@model DAL.Models.Character
+
+@{
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <form asp-controller="Home" asp-action="Fight" method="post">
-        <select name="characterId">
-            @if (ViewBag.Characters != null)
-            {
-                @foreach (var character in ViewBag.Characters)
-                {
-                    <option value="@character.Id">
-                        @character.Name
-                    </option>
-                }
-            }
-        </select>
-        
-        <select name="monsterId">
-            @if (ViewBag.Monsters != null)
-            {
-                @foreach (var monster in ViewBag.Monsters)
-                {
-                    <option value="@monster.Id">
-                        @monster.Name
-                    </option>
-                }
-            }
-        </select>
-        
-        <button type="submit">Fight!</button>
-    </form>
-</div>
+<form asp-controller="Home" asp-action="Fight">
+    @Html.EditorForModel();
+    <input type="submit"/>
+</form>

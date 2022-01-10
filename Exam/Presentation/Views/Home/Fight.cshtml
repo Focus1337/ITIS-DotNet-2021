@@ -1,11 +1,26 @@
-﻿@model dynamic
+﻿@* @model dynamic *@
+@* *@
+@* @{ *@
+@*     ViewBag.Title = "title"; *@
+@*     Layout = "_Layout"; *@
+@* } *@
+@* *@
+@* @if (ViewBag.Status != null) *@
+@* { *@
+@*     <h2>@ViewBag.Status</h2> *@
+@* } *@
+
+@model Presentation.Controllers.HomeController.FightModel
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-@if (ViewBag.Status != null)
+@Html.DisplayFor(model => model.Character)
+
+@foreach (var str in Model!.Log.Split('\n'))
 {
-    <h2>@ViewBag.Status</h2>
+    <p>@str</p>
 }
+
