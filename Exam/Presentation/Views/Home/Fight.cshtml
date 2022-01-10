@@ -1,4 +1,5 @@
-﻿@model dynamic
+﻿@using System.Security.AccessControl
+@model Presentation.Controllers.HomeController.FightModel
 
 @{
     ViewBag.Title = "Fight result";
@@ -23,11 +24,23 @@
         MaxDamagePerRound = @character.MaxDamagePerRound<br/>
     </p>
 }
+@* *@
+@* @if (ViewBag.Log != null) *@
+@* { *@
+@*     @foreach (var item in ViewBag) *@
+@*     { *@
+@*         <p>@item</p> *@
+@*     } *@
+@* } *@
 
-@if (ViewBag.Log != null)
+----------------------------------------------
+@if (Model?.Log != null)
 {
-    @foreach (var item in ViewBag.Log)
-    {
-        <p>@item</p>
-    }
+    <p>
+        @foreach (var str in Model!.Log.Split('\n'))
+        {
+            @str
+            <br/>
+        }
+    </p>
 }

@@ -7,7 +7,11 @@ public class HomeController : Controller
 {
     private static readonly HttpClient _client = new();
 
-    private record FightStartingModel(Character Character, Monster Monster);
+    // private record FightStartingModel(Character Character, Monster Monster);
+    private record FightStartingModel(Character Player, Monster Monster);
+    public record FightResult(string Log, Character Character);
+
+    public record FightModel(CalculatedCharacter Character, string Log, Character DamagedCharacter);
 
     public async Task<IActionResult> IndexAsync()
     {
@@ -39,11 +43,16 @@ public class HomeController : Controller
             JsonContent.Create(new FightStartingModel(character!, monster!)));
 
         // var log = (await responseMessage.Content.ReadFromJsonAsync<FightResult>())!.Log;
-        //
         // return View(new FightModel(calculated!, log));
 
-        // ViewBag.Log = (await responseMessage.Content.ReadFromJsonAsync<List<string>>())!;
-
-        return View();
+        var fightResult = await responseMessage.Content.ReadFromJsonAsync<FightResult>();
+       // return View();
+        return View(new FightModel(calculated!, fightResult!.Log, fightResult.Character));
     }
+}
+
+public class LogResult
+{
+    //public string Log { get; set; } = null!;
+    public List<string> Log { get; set; } = null!;
 }

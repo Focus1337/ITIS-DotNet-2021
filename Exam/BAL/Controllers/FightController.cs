@@ -10,10 +10,12 @@ public class FightController
 {
     public record FightInput(Character Player, Monster Monster);
 
+    public record FightResult(string Log, Monster Character);
+
     [HttpPost]
     public IActionResult Fight(FightInput input)
     {
-        var (character, monster) = input;
-        return new JsonResult(Fighter.GetLog(character, monster));
+        var (player, monster) = input;
+        return new JsonResult(Fighter.GetFightLog(player, monster));
     }
 }
