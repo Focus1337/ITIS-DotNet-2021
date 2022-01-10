@@ -1,5 +1,4 @@
-﻿@using System.Security.AccessControl
-@model Presentation.Controllers.HomeController.FightModel
+﻿@model Presentation.Controllers.HomeController.FightModel
 
 @{
     ViewBag.Title = "Fight result";
@@ -24,14 +23,6 @@
         MaxDamagePerRound = @character.MaxDamagePerRound<br/>
     </p>
 }
-@* *@
-@* @if (ViewBag.Log != null) *@
-@* { *@
-@*     @foreach (var item in ViewBag) *@
-@*     { *@
-@*         <p>@item</p> *@
-@*     } *@
-@* } *@
 
 ----------------------------------------------
 @if (Model?.Log != null)

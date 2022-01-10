@@ -6,12 +6,11 @@ namespace Presentation.Controllers;
 public class HomeController : Controller
 {
     private static readonly HttpClient _client = new();
+    
+    private record StartFight(Character Player, Monster Monster);
+    public record Result(string Log, Character Character);
 
-    // private record FightStartingModel(Character Character, Monster Monster);
-    private record FightStartingModel(Character Player, Monster Monster);
-    public record FightResult(string Log, Character Character);
-
-    public record FightModel(CalculatedCharacter Character, string Log, Character DamagedCharacter);
+    public record FightModel(CalculatedCharacter Character, string Log);//, Character DamagedCharacter);
 
     public async Task<IActionResult> IndexAsync()
     {
@@ -21,6 +20,15 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    public async Task<IActionResult> AddCharacter(Character? character)
+    {
+        await _client.PostAsync("https://localhost:7156/AddCharacter",
+            JsonContent.Create(character));
+ 
+        return NoContent();
+    }
+    
     public async Task<IActionResult> Fight(int characterId)
     {
         // Selected character
@@ -40,19 +48,9 @@ public class HomeController : Controller
 
         // Log
         responseMessage = await _client.PostAsync("https://localhost:7191/Fight",
-            JsonContent.Create(new FightStartingModel(character!, monster!)));
+            JsonContent.Create(new StartFight(character!, monster!)));
 
-        // var log = (await responseMessage.Content.ReadFromJsonAsync<FightResult>())!.Log;
-        // return View(new FightModel(calculated!, log));
-
-        var fightResult = await responseMessage.Content.ReadFromJsonAsync<FightResult>();
-       // return View();
-        return View(new FightModel(calculated!, fightResult!.Log, fightResult.Character));
+        var fightResult = await responseMessage.Content.ReadFromJsonAsync<Result>();
+        return View(new FightModel(calculated!, fightResult!.Log));
     }
-}
-
-public class LogResult
-{
-    //public string Log { get; set; } = null!;
-    public List<string> Log { get; set; } = null!;
 }

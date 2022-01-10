@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Character
+
+@{
     ViewData["Title"] = "Dnd";
 }
 
@@ -17,15 +19,12 @@
         </select>
         <button type="submit">Fight!</button>
     </form>
+    
+    <p>--------------------------</p>
+    OR YOU CAN ADD YOUR CHARACTER:
+    <p>--------------------------</p>
+    <form asp-controller="Home" asp-action="AddCharacter">
+        @Html.EditorForModel()
+        <input type="submit"/>
+    </form>
 </div>
-
-@* @model Character *@
-@* *@
-@* @{ *@
-@*     ViewData["Title"] = "Home Page"; *@
-@* } *@
-
-@* <form asp-controller="Home" asp-action="Fight"> *@
-@*     @Html.EditorForModel(); *@
-@*     <input type="submit"/> *@
-@* </form> *@

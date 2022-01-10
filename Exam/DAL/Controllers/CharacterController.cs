@@ -22,7 +22,7 @@ public class CharacterController : ControllerBase
         new JsonResult(await _repository.GetCharacterAsync(id));
 
     [HttpPost]
-    public async Task<IActionResult> AddCharacter(Character newCharacter)//([FromBody] Character newCharacter)
+    public async Task<IActionResult> AddCharacter(Character newCharacter)
     {
         var character = await _repository.GetCharacterAsync(newCharacter.Name);
 
