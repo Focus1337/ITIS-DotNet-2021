@@ -1,4 +1,4 @@
-﻿namespace DAL.Models;
+﻿namespace Presentation.Models;
 
 public class Character
 {

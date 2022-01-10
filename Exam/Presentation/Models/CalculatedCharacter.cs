@@ -1,6 +1,4 @@
-﻿using DAL.Models;
-
-namespace Presentation.Models;
+﻿namespace Presentation.Models;
 
 public class CalculatedCharacter : Character
 {

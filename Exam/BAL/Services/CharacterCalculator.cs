@@ -2,7 +2,6 @@
 
 namespace BAL.Services;
 
-
 public static class CharacterCalculator
 {
     public static CalculatedCharacter Calculate(Character character) =>

@@ -1,10 +1,10 @@
-﻿namespace Presentation.Models;
+﻿namespace BAL.Models;
 
 public class Monster
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;
-    
+
     public int HitPoints { get; set; }
     public int AttackModifier { get; set; }
 
