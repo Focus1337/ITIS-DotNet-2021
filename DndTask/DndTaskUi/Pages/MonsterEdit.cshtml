@@ -1,0 +1,49 @@
+﻿@page
+@model DndTaskUi.Pages.MonsterEdit
+
+@{
+    ViewBag.Title = "Monster edit";
+}
+
+
+<div class="text-center">
+    <form method="post" asp-area="" asp-page-handler="add">
+        <div class="form-group" style="width: fit-content">
+            <p><b>Add</b></p>
+            
+            <label class="form-label" for="name">Name</label>
+            <input class="form-control" name="name" id="name" required/>
+
+            <label class="form-label" for="attackModifier">Attack Modifier</label>
+            <input class="form-control" name="attackModifier" id="attackModifier" type="number" required/>
+
+            <label class="form-label" for="attackPerRound">Attack Per Round</label>
+            <input class="form-control" name="attackPerRound" id="attackPerRound" type="number" required/>
+
+            <label class="form-label" for="damageDicesCount">Damage Dices Count</label>
+            <input class="form-control" name="damageDicesCount" id="damageDicesCount" type="number" required/>
+
+            <label class="form-label" for="damageDiceType">Damage Dice Type</label>
+            <input class="form-control" name="damageDiceType" id="damageDiceType" type="number" required/>
+
+            <label class="form-label" for="weaponModifier">Weapon Modifier</label>
+            <input class="form-control" name="weaponModifier" id="weaponModifier" type="number" required/>
+            
+            <p></p>
+            <button type="submit" class="btn btn-sm btn-primary">Add</button>
+        </div>
+    </form>
+    
+    <br/>
+    
+    <form method="post" asp-area="" asp-page-handler="remove">
+        <div class="form-group" style="width: fit-content">
+            <p><b>Remove</b></p>
+            <label class="form-label" for="id">Id</label>
+            <input class="form-control" name="id" id="id" type="number" required/>
+            
+            <p></p>
+            <button type="submit" class="btn btn-sm btn-primary">Remove</button>
+        </div>
+    </form>
+</div>

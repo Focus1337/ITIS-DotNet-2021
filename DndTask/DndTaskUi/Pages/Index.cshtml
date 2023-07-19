@@ -1,0 +1,22 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    
+    <form method="GET" asp-area="" asp-page="Result">
+        <select name="id">
+             @foreach (var character in Model.Characters)
+             {
+                 <option value="@character.Id">
+                     @character.Name
+                 </option>
+             }
+        </select>
+        <input type="number" name="attack" value="0"/>
+        <input type="number" name="weapon" value="0"/>
+        <input type="submit"/>
+    </form>
+</div>
